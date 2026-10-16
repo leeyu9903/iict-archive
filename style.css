@@ -1,0 +1,162 @@
+/* ===== 색깔 변수: 여기만 바꾸면 전체 분위기가 바뀌어요 ===== */
+:root {
+  --ink: #2b2200;      /* 글자색: 진한 갈색빛 검정 (가독성용) */
+  --yellow: #ffd93d;   /* 포인트 노란색 */
+  --butter: #fff3b0;   /* 연한 노란색 */
+  --cream: #fff9dc;    /* 배경색: 아주 연한 노란색 */
+  --pink: #ff8fa3;     /* 봄 느낌 포인트: 분홍 (마우스 올렸을 때) */
+  --card: #ffffff;     /* 카드 배경 */
+}
+
+/* ===== 기본 설정 ===== */
+* {
+  box-sizing: border-box; /* padding을 넣어도 폭이 늘어나지 않게 */
+}
+
+/* ===== 페이지 전체 ===== */
+.page {
+  margin: 0;
+  min-height: 100vh;
+  padding: 3.5rem 1.25rem 4rem;
+  color: var(--ink);
+  background-color: var(--cream);
+  /* 연한 노란 물방울 무늬 배경 */
+  background-image: radial-gradient(var(--butter) 3px, transparent 3px);
+  background-size: 32px 32px;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic",
+    "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+}
+
+/* 내용이 너무 넓게 퍼지지 않도록 가운데에 모아 두기 */
+.page > * {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== 큰 제목 ===== */
+.title {
+  display: block;
+  max-width: 900px;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;     /* 제목을 가운데 정렬 */
+  /* 꽃이 양옆에 추가돼서 전체 폭이 늘었으니 글자 크기를 조금 줄임 */
+  font-size: min(4.2rem, 6.3vw);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  white-space: nowrap;    /* 줄바꿈 금지: 항상 한 줄로 */
+  color: var(--ink);      /* 글자는 진한 색 → 읽기 쉬움 */
+}
+
+/* 제목 양옆에 꽃 이모지 붙이기 (HTML 내용은 그대로) */
+.title::before,
+.title::after {
+  content: "🌼";
+  display: inline;        /* 위로 올라가지 않고 글자와 같은 줄에 배치 */
+  font-size: 0.8em;       /* 꽃 크기 (글자보다 살짝 작게) */
+}
+
+.title::before {
+  margin-right: 0.25em;   /* 왼쪽 꽃과 제목 사이 간격 */
+}
+
+.title::after {
+  margin-left: 0.25em;    /* 오른쪽 꽃과 제목 사이 간격 */
+}
+
+/* ===== 한 줄 소개 ===== */
+.intro {
+  margin-top: 2.5rem;       /* 제목과의 거리 (기존 1.25rem → 2.5rem) */
+  margin-bottom: 3.5rem;    /* 아래 과제 카드와의 거리 (기존 2.5rem → 3.5rem) */
+  padding: 0.6rem 1.1rem;
+  width: fit-content;       /* 글자 길이만큼만 배경 */
+  max-width: 100%;
+  font-size: clamp(1rem, 3.6vw, 1.2rem);
+  font-weight: 700;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 999px;     /* 알약 모양 */
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: rotate(-1deg); /* 살짝 삐딱하게 → 통통 튀는 느낌 */
+}
+
+/* ===== 과제 목록 ===== */
+.list {
+  padding: 0;
+  list-style: none;         /* 기본 점(•) 없애기 */
+  counter-reset: num;       /* 번호 세기 시작 */
+  display: grid;
+  gap: 1.6rem;              /* 카드 사이 간격 (기존 1.1rem → 1.6rem) */
+}
+
+/* 과제 카드 하나 */
+.item {
+  counter-increment: num;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--yellow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 카드를 번갈아 살짝 기울이기 */
+.item:nth-child(odd)  { transform: rotate(-0.8deg); }
+.item:nth-child(even) { transform: rotate(0.8deg); }
+
+/* 마우스를 올리거나 키보드로 선택했을 때: 통! 튀어 오르기 */
+.item:hover,
+.item:focus-within {
+  transform: translate(-3px, -5px) rotate(0deg);
+  box-shadow: 9px 9px 0 var(--pink);
+}
+
+/* ===== 링크 (카드 전체가 눌리도록) ===== */
+.item a {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.2rem;
+  color: var(--ink);
+  font-size: clamp(1rem, 3.8vw, 1.25rem);
+  font-weight: 700;
+  text-decoration: none;    /* 밑줄 없애기 */
+  word-break: keep-all;
+}
+
+/* 키보드로 이동할 때 보이는 테두리 (접근성) */
+.item a:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 16px;
+}
+
+/* 링크 앞에 동그란 번호 배지 (1, 2, 3...) */
+.item a::before {
+  content: counter(num);
+  flex: none;               /* 줄어들지 않게 */
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-weight: 900;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+}
+
+/* ===== 큰 화면(컴퓨터)에서 여백 넉넉하게 ===== */
+@media (min-width: 700px) {
+  .page {
+    padding-top: 5rem;
+  }
+}
+
+/* ===== 움직임이 불편한 사람을 위해 애니메이션 끄기 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+}
